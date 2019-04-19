@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | 3J Group Admin Page{% endblock %}
+{% block extrastyle %}
+<style media="screen">
+  #header,.module caption,{
+      background: #947054;
+    }
+
+</style>
+{% endblock %}
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">3J Group</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

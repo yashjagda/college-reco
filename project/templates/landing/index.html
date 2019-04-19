@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+  <div id="preloader">
+	<div class="south-load"></div>
+	</div>
+
+	<section class="hero-area">
+	<div class="hero-slides owl-carousel">
+
+	<div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/college1.jpg' %});">
+	<div class="container h-100">
+	<div class="row h-100 align-items-center">
+	<div class="col-12">
+	<div class="hero-slides-content">
+	<h2 data-animation="fadeInUp" data-delay="50ms">Find your perfect college</h2>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/college2.jpg' %});">
+	<div class="container h-100">
+	<div class="row h-100 align-items-center">
+	<div class="col-12">
+	<div class="hero-slides-content">
+	<h2 data-animation="fadeInUp" data-delay="30ms">Within Few Minutes</h2>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div class="single-hero-slide bg-img" style="background-image: url({% static 'img/bg-img/college3.jpg' %});">
+	<div class="container h-100">
+	<div class="row h-100 align-items-center">
+	<div class="col-12">
+	<div class="hero-slides-content">
+	<h2 data-animation="fadeInUp" data-delay="50ms">Enter your details below</h2>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
+
+	<div class="south-search-area">
+	<div class="container">
+	<div class="row">
+	<div class="col-12">
+	<div class="advanced-search-form">
+
+	<div class="search-title">
+	<p>Search for college</p>
+	</div>
+
+	<form action="{% url 'college:listing' %}" method="POST" id="advanceSearch">
+	<div class="row">
+	<div class="col-12 col-md-6 col-lg-6">
+	<div class="form-group">
+
+  <input type="text" name="marks" class="form-control" placeholder="What's the Score?(CET)">
+	</div>
+	</div>
+	<div class="col-12 col-md-6 col-lg-6">
+	<div class="form-group">
+
+            <select name="location" class="form-control" id="catagories" >
+          	<option selected="true" disabled="disabled">Preferred location</option>
+            {%for loc in location%}
+            <option value="{{loc.location}}"
+              {% if loc == values.location %}
+              selected
+              {% endif %}
+            >{{loc.location}}</option>
+            {%endfor%}
+
+          	</select>
+
+	</div>
+	</div>
+	<div class="col-12 col-md-6 col-lg-6">
+	 <div class="form-group">
+	<select name="caste" class="form-control" id="catagories">
+	<option selected="true" disabled="disabled">Caste</option>
+  {%for cas in caste%}
+  <option value="{{cas.caste}}">{{cas.caste}}</option>
+  {%endfor%}
+  </select>
+
+	</div>
+	</div>
+
+
+  <div class="col-12 col-md-6 col-lg-6">
+	 <div class="form-group">
+     <select  size="3" name="field" class="form-control" id="catagories overflow" >
+     <option selected="true" disabled="disabled">Desired Branch</option>
+     {%for fie in field%}
+     <option value="{{fie.field_name}}" >{{fie.field_name}}</option>
+     {%endfor%}
+     </select>
+
+	</div>
+	</div>
+
+
+
+
+
+	<div class="col-12 d-flex justify-content-between align-items-end">
+	<div class="form-group mb-0">
+  {% csrf_token %}
+	<button type="submit" class="btn south-btn">Search</button>
+	</div>
+	</div>
+	</div>
+	</form>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+  <br><br>
+	<section class="featured-properties-area section-padding-100-50">
+	<div class="container">
+	<div class="row">
+	<div class="col-12">
+	<div class="section-heading wow fadeInDown" >
+	<h2>Best Colleges</h2>
+	</div>
+	</div>
+	</div>
+	<div class="row">
+  {% for feat in colleges %}
+	<div class="col-12 col-md-6 col-xl-4">
+	<div class="single-featured-property mb-50 wow fadeInRight" data-wow-delay="650ms">
+
+	<div class="property-thumb">
+	<img src="{{ feat.picsrc }}" alt="">
+	</div>
+
+	<div class="property-content">
+	<h5><a href="colleges/{{feat.id}}">{{feat.name}}</a></h5>
+	<p class="location"><img src="{% static 'img/icons/location.png' %}" alt="">{{feat.location}}</p>
+	<p>Placement: {{feat.placements}} Lakhs</p>
+  <p>Rating: {{feat.rating}} Stars</p>
+	<div class="property-meta-data d-flex align-items-end justify-content-between">
+	<div class="new-tag">
+	<img src="img/icons/new.png" alt="">
+	</div>
+
+	</div>
+	</div>
+	</div>
+  </div>
+
+  {%endfor%}
+	</div>
+
+	</section>
+
+	<section class="south-testimonials-area section-padding-100">
+	<div class="container">
+	<div class="row">
+	<div class="col-12">
+	<div class="section-heading wow fadeInUp" data-wow-delay="250ms">
+	<h2>MAH CET Result 2019</h2>
+	<p>The State Common Entrance Test Cell, Maharashtra will announce the result of MHT CET 2019 on June 3, 2019. MHT CET 2019 result will be declared in online mode which can be accessed by logging in to admission portal using application form, password, and security code.</p>
+	</div>
+	</div>
+	</div>
+	<div class="row">
+	<div class="col-12">
+	<div class="testimonials-slides owl-carousel wow fadeInUp" data-wow-delay="500ms">
+
+	<div class="single-testimonial-slide text-center">
+	<h5>How to calculate MHT CET 2019 score?</h5>
+	<p>The score of MHT CET 2019 can be calculated by using the below mentioned formula:
+
+MHT CET Score = (Total correct answers in Maths x 2) + (Total correct answers in Chemistry & Physics x 1) + 5 marks (allotted by DTE to all candidates)</p>
+
+	</div>
+
+	<div class="single-testimonial-slide text-center">
+	<h5>MHT CET 2019 Facts and Figures</h5>
+	<p>Current year facts and figures of MHT CET 2019 are not available yet. In the previous year, around 2,84,239 candidates have registered for MHT CET 2018 (PCM Group) out of which 2,83,000 had actually appeared in entrance examination for admission to 1,38,741 seats under UG Engineering programmes.</p>
+
+	</div>
+
+	<div class="single-testimonial-slide text-center">
+	<h5>JEE Main related news</h5>
+	<p>JEE Main is applicable for admission to NITs, IIITs and CFTIs participating though Central Seat Allocation Board subject to the condition that the candidate should have secured at least 75% marks in the 12th class examination, or be in the top 20 percentile in the 12th class examination conducted by the respective Boards. For SC/ST candidates the qualifying marks would be 65% in the 12th class examination.</p>
+
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
+
+
+
+
+<footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(img/bg-img/cta.jpg);">
+	<div class="copywrite-text d-flex align-items-center justify-content-center">
+	<p>
+	Copyright &copy;<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Jatin,Jethwa,Jagda</a>
+	</div>
+	</footer>
+  {% endblock %}

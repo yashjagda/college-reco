@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div id="preloader">
+<div class="south-load"></div>
+</div>
+<style media="screen">
+ .header {
+    position: sticky;
+    top: 90px;
+    z-index: 1;
+    width: 100%;
+    background-color: rgba(0,0,0,.4);
+  }
+  @media only screen and (max-width: 991px) {
+
+  .header {
+  top: 70px;
+  }
+}
+
+  .progress-container {
+    width: 100%;
+    height: 8px;
+    background: #ccc;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: #947054;
+    width: 0%;
+  }
+
+
+
+</style>
+<div class="header">
+
+  <div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+  </div>
+</div>
+<section class="breadcumb-area bg-img" style="background-image: url({% static 'img/bg-img/college1.jpg' %});">
+<div class="container h-100">
+<div class="row h-100 align-items-center">
+<div class="col-12">
+<div class="breadcumb-content">
+<h3 class="breadcumb-title">Colleges</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<div class="south-search-area">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="advanced-search-form">
+
+<div class="search-title">
+<p>Search for college</p>
+</div>
+
+<form action="{% url 'college:colleges' %}" method="GET" id="advanceSearch">
+<div class="row">
+<div class="col-12 col-md-6 col-lg-6">
+<div class="form-group">
+<input type="input" class="form-control" name="keywords" placeholder="Keyword">
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-6">
+<div class="form-group">
+<select name="pref_location" class="form-control" id="cities">
+<option>Preferred location</option>
+{%for loc in location%}
+<option value="{{loc.location}}">{{loc.location}}</option>
+{%endfor%}
+</select>
+</div>
+</div>
+
+
+
+
+
+
+
+<div class="col-12 d-flex justify-content-between align-items-end">
+
+
+
+<div class="form-group mb-0">
+  {% csrf_token %}
+<button type="submit" class="btn south-btn">Search</button>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<br>
+
+
+
+<section class="listings-content-wrapper section-padding-100">
+<div class="container">
+
+<div class="row">
+
+<!-- colleges -->
+{% if colleges %}
+  {% for college in colleges %}
+  <div class="col-12 col-md-6 col-xl-4">
+  <div class="single-featured-property mb-50">
+
+  <div class="property-thumb">
+  <img src="{{ college.picsrc }}" alt="">
+  </div>
+
+  <div class="property-content">
+  <h5><a href="{{ college.id }}">{{ college.name }}</a></h5>
+  <p class="location"><img src="img/icons/location.png" alt="">{{ college.location }}</p>
+  <p>{{ college.description|truncatechars:200 }}</p>
+  <div class="property-meta-data d-flex align-items-end justify-content-between">
+  <div class="new-tag">
+  </div>
+  <div class="bathroom">
+  <span>Rating: {{ college.rating }}</span>
+  </div>
+  <div class="garage">
+  <span>Placement: {{ college.placements }}Lakhs</span>
+  </div>
+  <div class="space">
+  <span>Fees: {{college.fees }}</span>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  {% endfor %}
+
+{% else %}
+<div class="">
+  <p>empty database</p>
+</div>
+
+{% endif %}
+
+<div class="row">
+<div class="col-12">
+  {% if colleges.has_other_pages %}
+  <ul class="pagination">
+    {% if colleges.has_previous %}
+    <li class ="page-item">
+      <a href="?page={{colleges.previous_page_number}}" class="page-link">&laquo;
+      </a>
+    </li>
+
+  {% else %}
+  <li class="page-item disabled">
+    <a class="page-link">&laquo</a>
+  </li>
+  {% endif %}
+  {% for i in colleges.paginator.page_range %}
+    {% if colleges.number == i %}
+    <li class="page-item active">
+      <a  class="page-link">{{i}}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a href="?page={{i}}" class="page-link">{{i}}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+    {% if colleges.has_next %}
+    <li class ="page-item">
+      <a href="?page={{colleges.next_page_number}}" class="page-link">&raquo;
+      </a>
+    </li>
+
+  {% else %}
+  <li class="page-item disabled">
+    <a class="page-link">&raquo</a>
+  </li>
+  {% endif %}
+      </ul>
+  {% endif %}
+</div>
+</div>
+</div>
+</section>
+<script>
+// When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
+  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+}
+</script>
+
+<footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(img/bg-img/cta.jpg);">
+
+
+<div class="copywrite-text d-flex align-items-center justify-content-center">
+<p>
+Copyright &copy;<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Jatin,Jethwa,Jagda</a>
+
+</div>
+</footer>
+{% endblock %}

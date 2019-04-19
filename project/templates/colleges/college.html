@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<style media="screen">
+ .header {
+    position: sticky;
+    top: 90px;
+    z-index: 1;
+    width: 100%;
+    background-color: #f1f1f1;
+  }
+  @media only screen and (max-width: 991px) {
+
+  .header {
+  top: 70px;
+  }
+}
+
+  .progress-container {
+    width: 100%;
+    height: 8px;
+    background: #ccc;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: #947054;
+    width: 0%;
+  }
+</style>
+
+<div class="header">
+
+  <div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+  </div>
+</div>
+<section class="breadcumb-area bg-img" style="background-image: url({% static 'img/bg-img/college1.jpg' %});">
+<div class="container h-100">
+<div class="row h-100 align-items-center">
+<div class="col-12">
+<div class="breadcumb-content">
+<h3 class="breadcumb-title">{{ college_detail.name }}</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="listings-content-wrapper section-padding-100">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="single-listings-sliders owl-carousel">
+<img src="{{ college_detail.extra_1 }}" alt="">
+<img src="{{ college_detail.extra_2 }}" alt="">
+<img src="{{ college_detail.extra_3 }}" alt="">
+
+</div>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col-12 col-lg-8">
+<div class="listings-content">
+<div class="list-price">
+<p>Fees : Rs.{{college_detail.fees}}</p>
+</div>
+<h5>Description</h5>
+<p class="location"><img src="{%static 'img/icons/location.png' %}" alt="">{{college_detail.location}}</p>
+<p>{{college_detail.description}}.</p>
+<h5>Seats Availability</h5>
+<ul class="listings-core-features d-flex align-items-center">
+<li><i class="fa fa-check" aria-hidden="true"></i> Computer Engineering: {{college_detail.CS_seats}} </li>
+<li><i class="fa fa-check" aria-hidden="true"></i> Information Technology: {{college_detail.IT_seats}} </li>
+<li><i class="fa fa-check" aria-hidden="true"></i> EXTC: {{college_detail.EXTC_seats}}</li>
+<li><i class="fa fa-check" aria-hidden="true"></i> Electrical Engineering: {{college_detail.Electrical_seats}}</li>
+<li><i class="fa fa-check" aria-hidden="true"></i> Mechanical Engineering: {{college_detail.mechanical_seats}}</li>
+<li><i class="fa fa-check" aria-hidden="true"></i> Chemical Engineering: {{college_detail.chem_seats}}</li>
+<li><i class="fa fa-check" aria-hidden="true"></i> Civil Engineering: {{college_detail.civil_seats}}</li>
+<li><i class="fa fa-check" aria-hidden="true"></i> Electronics Engineering: {{college_detail.electronics_seats}}</li>
+</ul>
+<h5>Placement Package Approx:{{college_detail.placements}} Lakhs</h5>
+<h5>Rating: {{college_detail.rating}} stars</h5>
+<br><br>
+<div class="listings-btn-groups">
+<a href="#" class="btn south-btn">Return</a>
+<a href="#" class="btn south-btn active">Home</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<script>
+// When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
+  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+}
+</script>
+<footer class="footer-area section-padding-100-0 bg-img gradient-background-overlay" style="background-image: url(img/bg-img/cta.jpg);">
+<div class="copywrite-text d-flex align-items-center justify-content-center">
+<p>
+Copyright &copy;<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#" target="_blank">Jatin,Jethwa,Jagda</a>
+</div>
+</footer>
+{% endblock %}
